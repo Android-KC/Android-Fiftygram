@@ -32,9 +32,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import jp.wasabeef.glide.transformations.gpu.InvertFilterTransformation;
 import jp.wasabeef.glide.transformations.gpu.SepiaFilterTransformation;
 import jp.wasabeef.glide.transformations.gpu.SketchFilterTransformation;
 import jp.wasabeef.glide.transformations.gpu.ToonFilterTransformation;
+import jp.wasabeef.glide.transformations.gpu.VignetteFilterTransformation;
 
 public class MainActivity extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
     private ImageView imageView;
@@ -69,24 +71,18 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
             .into(imageView);
     }
 
-    public void applySepia(View v) {
-//        Glide
-//            .with(this)
-//            .load(image)
-//            .apply(RequestOptions.bitmapTransform(new SepiaFilterTransformation()))
-//            .into(imageView);
-
-        apply(new SepiaFilterTransformation());
+    public void applyVignette(View v) {
+        apply(new VignetteFilterTransformation());
     }
-
+    public void applySepia(View v) { apply(new SepiaFilterTransformation()); }
     public void applyToon(View v) {
         apply(new ToonFilterTransformation());
     }
-    public void applySketch(View v) {
-        apply(new SketchFilterTransformation());
+    public void applyInvert(View v) {
+        apply(new InvertFilterTransformation());
     }
 
-    public void savePhoto(View v) {
+//    public void savePhoto(View v) {
 //        Bitmap filtered = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
 //        MediaStore.Images.Media.insertImage();
 //        ContentValues values = new ContentValues();
@@ -106,8 +102,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
 //                context.getContentResolver().delete( uri, null, null );
 //            }
 //        }
-        
-    }
+//    }
 
     public void saveImageToStorage(View v) throws IOException {
         Bitmap filtered = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
