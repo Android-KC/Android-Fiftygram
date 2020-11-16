@@ -14,7 +14,7 @@ folder in the phone's internal storage.
 ## Installation
 
 Download the apk in the link below and install on your Android device.
-- [Fiftygram App APK](https://github.com/Android-KC/Android-Fiftygram/blob/main/Pokedex/app/release/app-release.apk)
+- [Fiftygram App APK](https://github.com/Android-KC/Android-Fiftygram/blob/main/Fiftygram/app/release/app-release.apk)
 
 Minimum Supported Version:
 - Android 6.0 Lollipop
