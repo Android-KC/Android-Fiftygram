@@ -1,7 +1,7 @@
 # Android-Fiftygram
 A Mobile App for Android to filter and save photos
 
-![Preview](https://github.com/Android-KC/Android-Fiftygram/blob/main/FiftygramPreview.gif)
+![Preview](https://github.com/Android-KC/Android-Fiftygram/blob/main/FiftygramPreview1.gif)
 
 ## Notes
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; This project is a sample mobile app for android that allows
