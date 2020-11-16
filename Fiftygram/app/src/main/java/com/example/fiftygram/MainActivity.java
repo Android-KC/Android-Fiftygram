@@ -64,11 +64,13 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     }
 
     public void apply(Transformation<Bitmap> filter) {
-        Glide
-            .with(this)
-            .load(image)
-            .apply(RequestOptions.bitmapTransform(filter))
-            .into(imageView);
+        if (image != null) {
+            Glide
+                .with(this)
+                .load(image)
+                .apply(RequestOptions.bitmapTransform(filter))
+                .into(imageView);
+        }
     }
 
     public void applyVignette(View v) {
@@ -106,10 +108,8 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
 
     public void saveImageToStorage(View v) throws IOException {
         Bitmap filtered = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
-        Log.e(null, "image save");
         OutputStream imageOutStream;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            Log.e(null, "build > Q");
             ContentValues values = new ContentValues();
             values.put(MediaStore.Images.Media.DISPLAY_NAME, "image_screenshot.jpg");
             values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
@@ -119,9 +119,22 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
 
             imageOutStream = getContentResolver().openOutputStream(uri);
         } else {
-            Log.e(null, "build < Q");
             String imagePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString();
-            File image = new File(imagePath, "filtered.jpg");
+
+            int i = 0;
+            boolean exists = true;
+            String imageName = "filtered.jpg";
+            do {
+                File file = new File(imagePath, imageName);
+                if (!file.exists()) {
+                    exists = false;
+                } else {
+                    imageName = "filtered(" + i + ").jpg";
+                    i++;
+                }
+            } while (exists == true);
+
+            File image = new File(imagePath, imageName);
             imageOutStream = new FileOutputStream(image);
         }
 
@@ -146,6 +159,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
                 image = BitmapFactory.decodeFileDescriptor(fileDescriptor);
                 parcelFileDescriptor.close();
                 imageView.setImageBitmap(image);
+                imageView.getLayoutParams().height = image.getHeight();
             } catch (IOException e) {
                 Log.e("cs50", "Image not found", e);
             }
